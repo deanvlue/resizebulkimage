@@ -1,0 +1,88 @@
+{
+    "medidas": [{
+            "imageType": "androidFullHdpi",
+            "width": 474,
+            "height": 299
+        },
+        {
+            "imageType": "androidFullMdpi",
+            "width": 316,
+            "height": 199
+        },
+        {
+            "imageType": "androidFullXhdpi",
+            "width": 632,
+            "height": 398
+        },
+        {
+            "imageType": "androidFullXxhdpi",
+            "width": 948,
+            "height": 597
+        },
+        {
+            "imageType": "androidThumbHdpi",
+            "width": 115,
+            "height": 72
+        },
+        {
+            "imageType": "androidThumbMdpi",
+            "width": 77,
+            "height": 48
+        },
+        {
+            "imageType": "androidThumbXhdpi",
+            "width": 154,
+            "height": 97
+        },
+        {
+            "imageType": "androidThumbXxhdpi",
+            "width": 231,
+            "height": 145
+        },
+        {
+            "imageType": "ImageIcon",
+            "width": 88,
+            "height": 55
+        },
+        {
+            "imageType": "ImageLarge",
+            "width": 261,
+            "height": 164
+        },
+        {
+            "imageType": "ImageMedium",
+            "width": 165,
+            "height": 104
+        },
+        {
+            "imageType": "ImageSmall",
+            "width": 115,
+            "height": 72
+        },
+        {
+            "imageType": "ImageStrip",
+            "width": 640,
+            "height": 246
+        },
+        {
+            "imageType": "iosLarge",
+            "width": 270,
+            "height": 170
+        },
+        {
+            "imageType": "iosLargeHighRes",
+            "width": 540,
+            "height": 340
+        },
+        {
+            "imageType": "iosThumb",
+            "width": 82,
+            "height": 52
+        },
+        {
+            "imageType": "iosThumbHighRes",
+            "width": 164,
+            "height": 103
+        }
+    ]
+}
