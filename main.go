@@ -34,6 +34,12 @@ func main() {
 	// guarda los 17 archivos en el folder newImages
 
 	flag.Parse()
+
+	if flag.Arg(0) == "" {
+		fmt.Println("App usage: imagecardart image")
+		fmt.Println("image:\t Image to resize in the configuration provided by sizes.json")
+	}
+
 	originalArt := flag.Arg(0)
 
 	medidasFile, err := os.Open("./sizes.json")
