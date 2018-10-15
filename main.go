@@ -29,8 +29,12 @@ type Medida struct {
 
 func main() {
 
+	// pasas el nombre del archivo
+	//define los tamaños en los que lo va a generar
+	// guarda los 17 archivos en el folder newImages
+
 	flag.Parse()
-	root := flag.Arg(0)
+	originalArt := flag.Arg(0)
 
 	medidasFile, err := os.Open("./sizes.json")
 	//handlle error
@@ -52,75 +56,52 @@ func main() {
 	json.Unmarshal(byteValue, &medidas)
 
 	//abriedno directorio
-	artes, err := ioutil.ReadDir(root)
+	/*artes, err := ioutil.ReadDir(root)
+		if err != nil {
+	y
+		}*/
+
+	artes, err := os.Open(originalArt)
 	if err != nil {
 		log.Fatal(err)
-	}
-
-	for _, f := range artes {
-		fmt.Printf("Abriendo Archivo %s\n", f.Name())
-		//iteramos en cada uno de nuestro arregoo de medidas
-		// e imprimimos la información que contiene
-		//abrimos imagen
-		imageReader, err := os.Open(root + f.Name())
-		if err != nil {
-			log.Fatal(err)
-			os.Exit(1)
-		}
-
-		//defer imageReader.Close()
-
-		im, _, err := image.Decode(imageReader)
-		if err != nil {
-			log.Fatal(err)
-			os.Exit(1)
-		}
-
-		for i := 0; i < len(medidas.Medidas); i++ {
-			nombre := strings.Split(f.Name(), ".")
-
-			newImageName := nombre[0] + "_" + medidas.Medidas[i].ImageType + "." + nombre[1]
-
-			fmt.Println("Resizing image to W:", strconv.FormatUint(uint64(medidas.Medidas[i].Width), 10))
-			//fmt.Println("Resizing image to H:", strconv.FormatUint(medidas.Medidas[i].Height, 10))
-			fmt.Printf("Imagen %s_%s.%s Guardada\n", nombre[0], medidas.Medidas[i].ImageType, nombre[1])
-			//fmt.Println("Tipo de Imagen: " + medidas.Medidas[i].ImageType)
-			newImage := resize.Resize(medidas.Medidas[i].Width, 0, im, resize.Lanczos3)
-			if nombre[1] == "jpg" {
-				out, err := os.Create("./newimages/" + newImageName)
-				err = jpeg.Encode(out, newImage, nil)
-				if err != nil {
-					log.Fatal(err)
-					os.Exit(1)
-				}
-			}
-
-		}
-	}
-
-}
-
-/*func main() {
-V	medidas, err := os.Open("./sizes.json")
-	//handlle error
-	if err != nil {
-		fmt.Println(err)
 		os.Exit(1)
 	}
 
-	fmt.Println("Cargando medidas...")
-	defer medidas.Close()
-}*/
+	defer artes.Close()
 
-/*
-func visit(path string, f os.FileInfo, err error) error {
-	fmt.Printf("Visited: %s\n", path)
-	return nil
+	fmt.Printf("Abriendo Archivo %s\n", originalArt)
+
+	//rompemos en nombre del archivo en sus componenetes mínimos:
+	splitPWD := strings.Split(artes.Name(), "/")
+	fileName := strings.Split(splitPWD[2], ".")
+	fmt.Println(fileName)
+
+	//defer imageReader.Close()
+
+	im, _, err := image.Decode(artes)
+	if err != nil {
+		log.Fatal(err)
+		os.Exit(1)
+	}
+
+	for i := 0; i < len(medidas.Medidas); i++ {
+
+		newImageName := fileName[0] + "_" + medidas.Medidas[i].ImageType + "." + fileName[1]
+
+		fmt.Println("Resizing image to W:", strconv.FormatUint(uint64(medidas.Medidas[i].Width), 10))
+		//fmt.Println("Resizing image to H:", strconv.FormatUint(medidas.Medidas[i].Height, 10))
+		fmt.Printf("Imagen ./newimages/%s_%s.%s Guardada\n", fileName[0], medidas.Medidas[i].ImageType, fileName[1])
+		//fmt.Println("Tipo de Imagen: " + medidas.Medidas[i].ImageType)
+		newImage := resize.Resize(medidas.Medidas[i].Width, 0, im, resize.Lanczos3)
+		if fileName[1] == "jpg" {
+			out, err := os.Create("./newimages/" + newImageName)
+			err = jpeg.Encode(out, newImage, nil)
+			if err != nil {
+				log.Fatal(err)
+				os.Exit(1)
+			}
+		}
+
+	}
+
 }
-
-func main() {
-	flag.Parse()
-	root := flag.Arg(0)
-	err := filepath.Walk(root, visit)
-	fmt.Printf("filepath.Walk() returned %v\n", err)
-}*/
